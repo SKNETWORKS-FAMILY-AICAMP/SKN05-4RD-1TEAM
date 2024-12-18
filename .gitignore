@@ -163,3 +163,4 @@ cython_debug/
 migrations/
 _media/
 jeongho_ignore.txt
+django16/
