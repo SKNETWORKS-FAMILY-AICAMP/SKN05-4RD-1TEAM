@@ -1,1 +1,1 @@
-# SKN05-4RD-1TEAM
+# do_it_django_atoz_2020_09
