@@ -28,6 +28,6 @@
 ![Architecture](./image/web.png)
 
 ## 📌 시스템 구성도
-![Architecture](./image/architecture.png)
+![Architecture](./image/architecture2.png)
 
 ## 📌 테스트 계획 및 결과 보고서
