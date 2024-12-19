@@ -30,3 +30,4 @@
 ![Architecture](./image/architecture2.png)
 
 ## 📌 테스트 계획 및 결과 보고서
+<a href="https://docs.google.com/presentation/d/15mQuaAipoubyv9XQCzXF0BfBPsW-1zwebT78ayUhBEE/edit#slide=id.g320804285ad_9_21" target="_blank">구글 프레젠테이션 링크</a>
