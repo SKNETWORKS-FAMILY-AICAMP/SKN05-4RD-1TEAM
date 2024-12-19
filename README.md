@@ -21,11 +21,10 @@
 사용자의 대략적인 보험료 또는 보장 가능성을 안내함
 
 ## 📌 화면설계
-복잡한 보험 약관의 정보를 일반 사용자나 상담원이 쉽게 조회할 수 있도록 돕는 것이 목표입니다.<br>
-기존 LLM 모델이 제공하는 일반적인 답변을 보완하기 위해 RAG 기술을 도입하여 실질적이고 구체적인 답변을 생성합니다.
+![screen](./image/screen.png)
 
 ## 📌 개발된 LLM연동 웹 애플리케이션
-![Architecture](./image/web.png)
+![web](./image/web.png)
 
 ## 📌 시스템 구성도
 ![Architecture](./image/architecture2.png)
