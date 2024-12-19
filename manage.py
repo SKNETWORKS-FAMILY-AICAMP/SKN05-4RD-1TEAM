@@ -5,8 +5,7 @@ import sys
 
 
 def main():
-    os.environ["OPENAI_API_KEY"] = ''
-
+    os.environ["OPENAI_API_KEY"] = ""
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chatbot_website.settings')
     try:
