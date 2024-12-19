@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운전자 보험 챗봇</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <!-- 상단 버튼 영역 -->
+    <div class="header">
+        <form method="POST" action="{% url 'reset_chat' %}" class="inline-form">
+            {% csrf_token %}
+            <button type="submit" class="reset-button">대화 기록 초기화</button>
+        </form>
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit" class="logout-button">로그아웃</button>
+        </form>
+    </div>
+
+    <div class="container">
+        <h1>🚘 운전자 보험 챗봇</h1>
+
+        <!-- 사용자 알림 영역 -->
+        <div id="message-box" class="message-box"></div>
+
+        <!-- 채팅 영역 -->
+        <div class="chat-box" id="chat-box">
+            {% for chat in chat_history %}
+                <div class="message-wrapper user-wrapper">
+                    <div class="user-message">{{ chat.user }}</div>
+                </div>
+                <div class="message-wrapper bot-wrapper">
+                    <div class="bot-message">{{ chat.bot }}</div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- 입력 영역 -->
+        <div class="input-section">
+            <label for="upload-pdf" class="pdf-upload-button">📄</label>
+            <input type="file" id="upload-pdf" name="pdf_file" accept="application/pdf" style="display: none;">
+            <input type="text" id="user-input" placeholder="질문을 입력하세요..." required>
+            <button type="button" id="submit-question">전송</button>
+        </div>
+    </div>
+
+    <!-- 모달 알림 -->
+    <div id="success-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <p>✅ 파일 처리가 성공적으로 완료되었습니다!</p>
+            <button onclick="closeModal()">확인</button>
+        </div>
+    </div>
+
+    <script>
+        // CSRF 토큰 가져오기
+        function getCSRFToken() {
+            return document.querySelector('[name=csrfmiddlewaretoken]').value;
+        }
+
+        // 메시지 표시 함수
+        function showMessage(message, type = 'success') {
+            const messageBox = document.getElementById('message-box');
+            messageBox.innerHTML = `<p class="${type}-message">${message}</p>`;
+            messageBox.style.display = 'block';
+            setTimeout(() => { messageBox.style.display = 'none'; }, 5000);
+        }
+
+        // 모달 닫기
+        function closeModal() {
+            document.getElementById('success-modal').style.display = 'none';
+        }
+
+        // PDF 업로드 처리
+        document.getElementById('upload-pdf').addEventListener('change', function() {
+            const loadingIndicator = document.getElementById('message-box');
+            if (this.files.length > 0) {
+                const formData = new FormData();
+                formData.append('pdf_file', this.files[0]);
+
+                // 로딩 메시지 표시
+                showMessage('🔄 파일 처리 중입니다...', 'info');
+
+                fetch("{% url 'upload_pdf' %}", {
+                    method: 'POST',
+                    headers: { 'X-CSRFToken': getCSRFToken() },
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.message || 'PDF 업로드 실패'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('success-modal').style.display = 'block'; // 모달 표시
+                    } else {
+                        showMessage(data.message || 'PDF 업로드 실패', 'error');
+                    }
+                })
+                .catch(error => {
+                    showMessage('PDF 업로드 중 오류 발생: ' + error.message, 'error');
+                });
+            }
+        });
+
+        // 질문 제출 처리
+        document.getElementById('submit-question').addEventListener('click', function () {
+            const userInput = document.getElementById('user-input').value.trim();
+            const chatBox = document.getElementById('chat-box');
+
+            if (userInput) {
+                // 사용자 질문 추가
+                const userMessage = `
+                    <div class="message-wrapper user-wrapper">
+                        <div class="user-message">
+                            ${userInput}
+                        </div>
+                    </div>`;
+                chatBox.innerHTML += userMessage;
+
+                // 로딩 메시지 추가
+                const loadingMessageId = `loading-${Date.now()}`;
+                const loadingMessage = `
+                    <div class="message-wrapper bot-wrapper">
+                        <div class="bot-message" id="${loadingMessageId}">
+                            로딩 중...
+                        </div>
+                    </div>`;
+                chatBox.innerHTML += loadingMessage;
+
+                // 스크롤 하단으로 이동
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+                // 서버 요청
+                fetch("{% url 'chat' %}", {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCSRFToken(),
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ user_input: userInput })
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(err => { throw new Error(err.message || '질문 처리 실패'); });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // 로딩 메시지를 실제 응답으로 교체
+                    const botMessage = `
+                        <div class="message-wrapper bot-wrapper">
+                            <div class="bot-message">
+                                ${data.response}
+                            </div>
+                        </div>`;
+                    const loadingElement = document.getElementById(loadingMessageId);
+                    if (loadingElement) {
+                        loadingElement.outerHTML = botMessage;
+                    }
+                })
+                .catch(error => {
+                    const errorMessage = `
+                        <div class="message-wrapper bot-wrapper">
+                            <div class="bot-message error-message">
+                                오류 발생: ${error.message}
+                            </div>
+                        </div>`;
+                    const loadingElement = document.getElementById(loadingMessageId);
+                    if (loadingElement) {
+                        loadingElement.outerHTML = errorMessage;
+                    }
+                });
+
+                document.getElementById('user-input').value = '';
+            } else {
+                showMessage('질문을 입력하세요!', 'error');
+            }
+        });
+    </script>
+</body>
+</html>

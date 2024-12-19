@@ -1,0 +1,298 @@
+/* 기본 설정 */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* 헤더 */
+.header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end; /* 오른쪽 정렬 */
+    padding: 10px 20px; /* 여백 추가 */
+    box-sizing: border-box;
+}
+
+/* 버튼 그룹 */
+.button-group {
+    display: flex;
+    gap: 10px; /* 버튼 간격 */
+}
+
+/* 공통 버튼 스타일 */
+.button {
+    display: inline-block;
+    padding: 8px 15px;
+    text-align: center;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+/* 버튼 색상 */
+.primary-button {
+    background-color: #007bff;
+}
+
+.primary-button:hover {
+    background-color: #0056b3;
+}
+
+.secondary-button {
+    background-color: #6c757d;
+}
+
+.secondary-button:hover {
+    background-color: #5a6268;
+}
+
+/* 메인 컨테이너 */
+.container {
+    background-color: #fff;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    text-align: center;
+    margin-top: 80px; /* 헤더 높이만큼 아래로 */
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* 채팅 박스 스타일 */
+.chat-box {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    height: 400px;
+    overflow-y: auto;
+    font-family: Arial, sans-serif;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+/* 사용자와 봇 메시지 공통 스타일 */
+.message-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 5px 0;
+}
+
+.user-wrapper {
+    justify-content: flex-end; /* 질문을 오른쪽 끝으로 */
+}
+
+.bot-wrapper {
+    justify-content: flex-start; /* 답변을 왼쪽 끝으로 */
+}
+
+
+.user-message, .bot-message {
+    max-width: 70%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    line-height: 1.5;
+    word-wrap: break-word;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* 사용자 메시지 스타일 */
+.user-message {
+    background-color: #e6f7ff;
+    color: #333;
+    text-align: left;
+}
+
+/* 봇 메시지 스타일 */
+.bot-message {
+    background-color: #f2f2f2;
+    color: #333;
+    text-align: left;
+}
+
+/* 입력 영역 */
+.input-section {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.input-section input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-section button {
+    background-color: #28a745;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.input-section button:hover {
+    background-color: #218838;
+    transform: scale(1.05);
+}
+
+/* PDF 업로드 버튼 */
+.pdf-upload-button {
+    display: inline-block;
+    font-size: 1.5rem;
+    background-color: #f4f4f4;
+    color: #333;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.pdf-upload-button:hover {
+    background-color: #ddd;
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+/* 초기화 버튼 */
+.reset-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.reset-button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* 로그아웃 버튼 */
+.logout-button {
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+
+.bot-message.loading::after {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 2px solid #ccc;
+    border-top: 2px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-left: 10px;
+}
+
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.divider {
+    border-bottom: 1px solid #ddd;
+    margin: 10px 0;
+}
+
+
+/* 메시지 박스 */
+.message-box {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.message-box.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message-box.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* 모달 스타일 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.modal-content button:hover {
+    background-color: #0056b3;
+}

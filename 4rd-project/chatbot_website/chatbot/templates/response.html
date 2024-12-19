@@ -1,0 +1,50 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>운전자 보험 챗봇 응답</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <!-- 제목 -->
+        <h1>🚘 운전자 보험 챗봇 응답 🚘</h1>
+
+        <!-- 입력한 질문 -->
+        <div class="response-section">
+            <h2>입력하신 질문:</h2>
+            <div class="chat-box">
+                <p>{{ user_input }}</p>
+            </div>
+        </div>
+
+        <!-- 챗봇의 답변 -->
+        <div class="response-section">
+            <h2>챗봇의 답변:</h2>
+            <div class="chat-box">
+                <p>{{ model_response }}</p>
+            </div>
+        </div>
+
+        <!-- 채팅 기록 -->
+        <div class="history-section">
+            <h3>📜 이전 채팅 기록</h3>
+            {% if chat_history %}
+                {% for chat in chat_history %}
+                    <div class="chat-entry">
+                        <p><strong>질문:</strong> {{ chat.question }}</p>
+                        <p><strong>답변:</strong> {{ chat.response }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>아직 기록된 채팅이 없습니다.</p>
+            {% endif %}
+        </div>
+
+        <!-- 돌아가기 링크 -->
+        <a href="/" class="return-link">⬅ 다시 질문하기</a>
+    </div>
+</body>
+</html>
