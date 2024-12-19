@@ -25,9 +25,9 @@
 기존 LLM 모델이 제공하는 일반적인 답변을 보완하기 위해 RAG 기술을 도입하여 실질적이고 구체적인 답변을 생성합니다.
 
 ## 📌 개발된 LLM연동 웹 애플리케이션
-![Architecture](./images/web.png)
+![Architecture](./image/web.png)
 
 ## 📌 시스템 구성도
-![Architecture](./images/architecture.png)
+![Architecture](./image/architecture.png)
 
 ## 📌 테스트 계획 및 결과 보고서
