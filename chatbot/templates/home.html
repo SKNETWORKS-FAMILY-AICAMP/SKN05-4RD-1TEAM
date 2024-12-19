@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="운전자 보험 챗봇 시스템. 사용자 친화적인 대화형 인터페이스 제공.">
+    <meta name="keywords" content="운전자 보험, 챗봇, 대화형 시스템">
+    <meta name="author" content="Your Company Name">
+    <title>홈페이지</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="header">
+        <div class="button-group">
+            <a href="{% url 'login' %}" class="button primary-button">로그인</a>
+            <a href="{% url 'signup' %}" class="button secondary-button">회원가입</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>🚀 환영합니다!</h1>
+        <p>운전자 보험 챗봇 시스템에 오신 것을 환영합니다.</p>
+        <div class="chat-box">
+            <p class="bot-message">안녕하세요! 무엇을 도와드릴까요?</p>
+        </div>
+        <div class="input-section">
+            <input type="text" placeholder="메시지를 입력하세요...">
+            <button>전송</button>
+        </div>
+    </div>
+</body>
+</html>

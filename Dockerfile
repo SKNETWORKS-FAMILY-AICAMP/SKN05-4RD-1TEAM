@@ -1,17 +1,21 @@
 # pull official base image
-FROM python:3.10.15-alpine
+FROM python:3.10.14
 
 # set work directory
 WORKDIR /usr/src/app
 
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-RUN apk update
-RUN apk add postgresql-dev gcc python3-dev musl-dev zlib-dev jpeg-dev #--(5.2)
+# Update package list and install dependencies
+RUN apt-get update && apt-get install -y \
+    postgresql libpq-dev gcc python3-dev zlib1g-dev libjpeg-dev
 
 COPY . /usr/src/app/
-# install dependencies
+
+
+
 RUN pip install --upgrade pip
+
+
 RUN pip install -r requirements.txt
+
+
+CMD ["/bin/bash", "-c", "0.0.0.0:8000", "tail -f /dev/null" ]

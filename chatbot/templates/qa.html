@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>질의응답</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <h2>질문을 입력하세요</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="query" placeholder="예: 운전자 보험에 대해 알려주세요." required>
+        <button type="submit">질문 제출</button>
+    </form>
+    {% if response %}
+    <h3>답변:</h3>
+    <p>{{ response }}</p>
+    {% endif %}
+</body>
+</html>

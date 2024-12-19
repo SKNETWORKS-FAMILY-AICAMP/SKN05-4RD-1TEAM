@@ -5,8 +5,10 @@ import sys
 
 
 def main():
+    os.environ["OPENAI_API_KEY"] = ''
+
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'do_it_django_prj.settings')
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'chatbot_website.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
